@@ -10,23 +10,25 @@ This document outlines a straightforward way to deploy the server to Render as a
 2) Create a new Web Service on Render
    - Connect your GitHub repo that contains this project.
    - Choose the `server/` directory as the Root Directory for the service.
-   - Set the Build Command to:
+    - Set the Build Command to:
 
-     npm ci && npm run prisma:generate && npm run build
+       npm run render:build
 
      (Prisma requires `prisma generate` to create the client before build/run.)
 
-   - Set the Start Command to:
+    - Set the Start Command to:
 
-     npm start
+       npm run render:start
 
    - Set the Environment to `Node` and choose a compatible Node version (Render default is usually fine).
 
 3) Add Environment Variables
-   - In the Render service settings -> Environment, add the following variables (from `server/.env.example`):
+    - In the Render service settings -> Environment, add the following variables (from `server/.env.example`):
      - `DATABASE_URL` (the Postgres connection string from step 1)
      - `JWT_SECRET` (a strong secret string, at least 16+ characters)
      - Optionally set `NODE_ENV=production` and `PORT` if you want custom port (Render provides `PORT` automatically).
+
+    - Make sure the service Root Directory points to `server/` if you deploy from the repository root. If the root is misconfigured, Render may try to run `dist/index.js` from the wrong folder.
 
 4) (Optional) Run Prisma migrations and seed
    - You can run `npx prisma migrate deploy` on Render as a one-time deploy hook, or run migrations locally against the Render DB.

@@ -18,7 +18,7 @@ const buildContext = async (
 ): Promise<GraphQLContext> => {
   let user: AuthUser | null = null;
   if (request.headers.authorization) {
-    const payload = await request.jwtVerify();
+    const payload = (await request.jwtVerify()) as { sub: string; email: string };
     user = { id: payload.sub, email: payload.email };
   }
   return { request, reply, prisma, user };
@@ -31,8 +31,8 @@ const start = async () => {
 
   await app.register(mercurius, {
     schema: typeDefs,
-    resolvers,
-    context: buildContext,
+    resolvers: resolvers as any,
+    context: buildContext as any,
     graphiql: env.NODE_ENV !== 'production',
   });
 
