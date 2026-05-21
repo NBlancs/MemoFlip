@@ -1,6 +1,5 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { CreditsScreen } from '../screens/CreditsScreen';
 import { GameScreen } from '../screens/GameScreen';
 import { LeaderboardScreen } from '../screens/LeaderboardScreen';
 import { MainMenuScreen } from '../screens/MainMenuScreen';
@@ -31,7 +30,6 @@ export function AppNavigator() {
       <Stack.Screen name="Results" component={ResultsScreen} />
       <Stack.Screen name="Leaderboard" component={LeaderboardScreen} />
       <Stack.Screen name="Settings" component={SettingsScreen} />
-      <Stack.Screen name="Credits" component={CreditsScreen} />
     </Stack.Navigator>
   );
 }

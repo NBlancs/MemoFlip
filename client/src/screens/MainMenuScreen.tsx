@@ -180,7 +180,6 @@ export function MainMenuScreen({ navigation }: Props) {
         <AppButton label="Leaderboards" onPress={() => navigation.navigate('Leaderboard')} variant="secondary" />
         <AppButton label="How to Play" onPress={() => navigation.navigate('Onboarding')} variant="secondary" />
         <AppButton label="Settings" onPress={() => navigation.navigate('Settings')} variant="ghost" />
-        <AppButton label="Credits" onPress={() => navigation.navigate('Credits')} variant="ghost" />
       </View>
       <GameModal
         visible={usernameModalVisible}

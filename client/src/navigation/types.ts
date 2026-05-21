@@ -6,5 +6,4 @@ export type RootStackParamList = {
   Results: undefined;
   Leaderboard: undefined;
   Settings: undefined;
-  Credits: undefined;
 };
