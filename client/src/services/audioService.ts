@@ -44,24 +44,42 @@ export const audioService = {
 
     await this.configure();
 
-    const entries = await Promise.all(
+    const entries = await Promise.allSettled(
       (Object.entries(soundSources) as Array<[SoundName, AudioSource]>).map(async ([name, source]) => {
-        const { sound } = await Audio.Sound.createAsync(source, { shouldPlay: false, volume: 1 });
-        return [name, sound] as const;
+        try {
+          console.log(`[audioService] Loading sound: ${name}`);
+          const { sound } = await Audio.Sound.createAsync(source, { shouldPlay: false, volume: 1 });
+          console.log(`[audioService] Loaded sound: ${name}`);
+          return [name, sound] as const;
+        } catch (err) {
+          console.error(`[audioService] Failed to load sound ${name}:`, err);
+          throw err;
+        }
       }),
     );
 
-    for (const [name, sound] of entries) {
-      sounds.set(name, sound);
+    for (const result of entries) {
+      if (result.status === 'fulfilled') {
+        const [name, sound] = result.value;
+        sounds.set(name, sound);
+      } else {
+        console.warn(`[audioService] Sound loading rejected:`, result.reason);
+      }
     }
 
-    const { sound } = await Audio.Sound.createAsync(bgMusicSource, {
-      shouldPlay: false,
-      isLooping: true,
-      volume: 1,
-    });
+    try {
+      console.log('[audioService] Loading background music');
+      const { sound } = await Audio.Sound.createAsync(bgMusicSource, {
+        shouldPlay: false,
+        isLooping: true,
+        volume: 1,
+      });
+      console.log('[audioService] Background music loaded');
+      bgMusic = sound;
+    } catch (err) {
+      console.error('[audioService] Failed to load background music:', err);
+    }
 
-    bgMusic = sound;
     preloaded = true;
   },
 

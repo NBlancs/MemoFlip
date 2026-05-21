@@ -30,10 +30,15 @@ export const assetService = {
 
     await Promise.all(
       assets.map(async (asset) => {
-        const source = Image.resolveAssetSource(asset);
+        try {
+          const source = Image.resolveAssetSource(asset);
 
-        if (source?.uri) {
-          await Image.prefetch(source.uri);
+          if (source?.uri) {
+            await Image.prefetch(source.uri);
+          }
+        } catch (err) {
+          console.warn('[assetService] Failed to prefetch asset:', asset, err);
+          // Don't fail the entire preload if one asset fails
         }
 
         completed += 1;
