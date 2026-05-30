@@ -1,6 +1,6 @@
 import { storageService } from './storage';
 
-export type Difficulty = 'easy' | 'medium';
+export type Difficulty = 'easy' | 'normal' | 'hard';
 
 export interface GameSettings {
   soundEnabled: boolean;

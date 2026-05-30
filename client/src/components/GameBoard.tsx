@@ -13,7 +13,7 @@ interface GameBoardProps {
 
 export const GameBoard = memo(function GameBoard({ cards, disabled, onTilePress }: GameBoardProps) {
   const { width, height } = useWindowDimensions();
-  const columns = cards.length > 16 ? 6 : 4;
+  const columns = Math.round(Math.sqrt(cards.length));
   const gap = spacing.xs;
   const boardWidth = Math.min(width - spacing.md * 2, height * 0.72);
   const tileSize = useMemo(() => Math.floor((boardWidth - gap * (columns - 1)) / columns), [boardWidth, columns, gap]);

@@ -12,11 +12,14 @@ export const playerSchema = `
   type PlayerStats {
     totalMatches: Int!
     bestTimeEasy: Int
-    bestTimeMedium: Int
+    bestTimeNormal: Int
+    bestTimeHard: Int
     bestMovesEasy: Int
-    bestMovesMedium: Int
+    bestMovesNormal: Int
+    bestMovesHard: Int
     averageMovesEasy: Float
-    averageMovesMedium: Float
+    averageMovesNormal: Float
+    averageMovesHard: Float
   }
 
   type LeaderboardEntry {

@@ -5,7 +5,7 @@ const zod_1 = require("zod");
 const antiCheat_1 = require("../utils/antiCheat");
 const errors_1 = require("../utils/errors");
 const submitMatchSchema = zod_1.z.object({
-    difficulty: zod_1.z.enum(['EASY', 'MEDIUM']),
+    difficulty: zod_1.z.enum(['EASY', 'NORMAL', 'HARD']),
     moves: zod_1.z.number().int().positive(),
     elapsedSeconds: zod_1.z.number().int().positive(),
     gridRows: zod_1.z.number().int().positive().optional(),

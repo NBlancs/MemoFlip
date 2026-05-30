@@ -11,6 +11,7 @@ import { Screen } from '../components/Screen';
 import { TerminalHeader } from '../components/TerminalHeader';
 import { buildMatchResult, persistenceService } from '../services/persistenceService';
 import { gameBootstrapService } from '../services/gameBootstrapService';
+import { settingsService } from '../services/settingsService';
 import { useGameFeedbackEvents } from '../services/gameFeedbackService';
 import { useGameLoopLifecycle } from '../services/gameLoopLifecycle';
 import { flipAnimationLockMs, useGameActions, useGameStore } from '../state/gameStore';
@@ -113,6 +114,13 @@ export function GameScreen({ navigation }: Props) {
     navigation.replace('Results');
   };
 
+  const progressToNextLevel = async () => {
+    const nextDifficulty = difficulty === 'easy' ? 'normal' : 'hard';
+    await settingsService.updateSettings({ difficulty: nextDifficulty });
+    recordedGameOverRef.current = false;
+    await gameBootstrapService.initializeNewGame();
+  };
+
   return (
     <Screen dense>
       <View style={styles.headerRow}>
@@ -151,9 +159,9 @@ export function GameScreen({ navigation }: Props) {
       <GameModal
         visible={isComplete}
         title="Congratulations"
-        primaryLabel="View Results"
+        primaryLabel={difficulty === 'hard' ? "View Results" : "Next Level"}
         secondaryLabel="Main Menu"
-        onPrimary={viewResults}
+        onPrimary={difficulty === 'hard' ? viewResults : progressToNextLevel}
         onSecondary={mainMenu}
       >
         <Text style={styles.modalText}>

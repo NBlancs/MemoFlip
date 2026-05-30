@@ -7,7 +7,8 @@ const baseSchema = `
 
   enum Difficulty {
     EASY
-    MEDIUM
+    NORMAL
+    HARD
   }
 
   type Query {

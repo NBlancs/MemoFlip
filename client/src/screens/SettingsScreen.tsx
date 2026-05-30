@@ -14,11 +14,12 @@ import { RootStackParamList } from '../navigation/types';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Settings'>;
 
-const difficultyOptions: Difficulty[] = ['easy', 'medium'];
+const difficultyOptions: Difficulty[] = ['easy', 'normal', 'hard'];
 
 const difficultyLabelByValue: Record<Difficulty, string> = {
-  easy: 'Normal',
-  medium: 'Hard',
+  easy: 'Easy',
+  normal: 'Normal',
+  hard: 'Hard',
 };
 
 export function SettingsScreen({ navigation }: Props) {

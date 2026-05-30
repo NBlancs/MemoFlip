@@ -1,3 +1,4 @@
+import type { Difficulty } from '@prisma/client';
 import type { GraphQLContext } from '../types';
 import { getLeaderboard, getPlayerStats, getRecentMatches } from '../services/playerService';
 import { requireUser } from '../utils/auth';
@@ -17,7 +18,7 @@ export const playerResolvers = {
     },
     leaderboard: async (
       _: unknown,
-      { difficulty, limit }: { difficulty: 'EASY' | 'MEDIUM'; limit?: number },
+      { difficulty, limit }: { difficulty: Difficulty; limit?: number },
       context: GraphQLContext,
     ) => {
       const safeLimit = Math.min(Math.max(limit ?? 10, 1), 50);

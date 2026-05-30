@@ -33,11 +33,19 @@ async function main() {
                 },
                 {
                     playerId: player.id,
-                    difficulty: client_1.Difficulty.MEDIUM,
-                    moves: 26,
-                    elapsedSeconds: 78,
+                    difficulty: client_1.Difficulty.NORMAL,
+                    moves: 30,
+                    elapsedSeconds: 58,
                     gridRows: 6,
                     gridCols: 6,
+                },
+                {
+                    playerId: player.id,
+                    difficulty: client_1.Difficulty.HARD,
+                    moves: 45,
+                    elapsedSeconds: 110,
+                    gridRows: 8,
+                    gridCols: 8,
                 },
             ],
         });

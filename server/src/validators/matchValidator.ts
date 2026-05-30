@@ -4,7 +4,7 @@ import { getDifficultyConfig, getMinimumMoves } from '../utils/antiCheat';
 import { validationError } from '../utils/errors';
 
 const submitMatchSchema = z.object({
-  difficulty: z.enum(['EASY', 'MEDIUM']),
+  difficulty: z.enum(['EASY', 'NORMAL', 'HARD']),
   moves: z.number().int().positive(),
   elapsedSeconds: z.number().int().positive(),
   gridRows: z.number().int().positive().optional(),

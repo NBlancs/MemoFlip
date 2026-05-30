@@ -15,8 +15,9 @@ interface HUDProps {
 }
 
 const labelByDifficulty: Record<Difficulty, string> = {
-  easy: 'Normal',
-  medium: 'Hard',
+  easy: 'Easy',
+  normal: 'Normal',
+  hard: 'Hard',
 };
 
 export const HUD = memo(function HUD({ matchedPairs, totalPairs, moves, elapsedTime, lives, difficulty }: HUDProps) {

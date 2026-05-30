@@ -14,11 +14,14 @@ export const getPlayerStats = async (prisma: PrismaClient, playerId: string) => 
   const stats = {
     totalMatches: 0,
     bestTimeEasy: null as number | null,
-    bestTimeMedium: null as number | null,
+    bestTimeNormal: null as number | null,
+    bestTimeHard: null as number | null,
     bestMovesEasy: null as number | null,
-    bestMovesMedium: null as number | null,
+    bestMovesNormal: null as number | null,
+    bestMovesHard: null as number | null,
     averageMovesEasy: null as number | null,
-    averageMovesMedium: null as number | null,
+    averageMovesNormal: null as number | null,
+    averageMovesHard: null as number | null,
   };
 
   for (const row of aggregates) {
@@ -28,10 +31,15 @@ export const getPlayerStats = async (prisma: PrismaClient, playerId: string) => 
       stats.bestMovesEasy = row._min.moves ?? null;
       stats.averageMovesEasy = row._avg.moves ?? null;
     }
-    if (row.difficulty === 'MEDIUM') {
-      stats.bestTimeMedium = row._min.elapsedSeconds ?? null;
-      stats.bestMovesMedium = row._min.moves ?? null;
-      stats.averageMovesMedium = row._avg.moves ?? null;
+    if (row.difficulty === 'NORMAL') {
+      stats.bestTimeNormal = row._min.elapsedSeconds ?? null;
+      stats.bestMovesNormal = row._min.moves ?? null;
+      stats.averageMovesNormal = row._avg.moves ?? null;
+    }
+    if (row.difficulty === 'HARD') {
+      stats.bestTimeHard = row._min.elapsedSeconds ?? null;
+      stats.bestMovesHard = row._min.moves ?? null;
+      stats.averageMovesHard = row._avg.moves ?? null;
     }
   }
 

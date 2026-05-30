@@ -33,6 +33,41 @@ const shapeAssets: Record<string, ImageSourcePropType> = {
   up: require('../../assets/up.png'),
 };
 
+const textSymbolMap: Record<string, string> = {
+  alpha: 'α',
+  beta: 'β',
+  gamma: 'γ',
+  delta: 'δ',
+  omega: 'ω',
+  theta: 'θ',
+  phi: 'φ',
+  psi: 'ψ',
+  sigma: 'σ',
+  lambda: 'λ',
+  infinity: '∞',
+  percent: '%',
+  ampersand: '&',
+  asterisk: '*',
+  dollar: '$',
+  hash: '#',
+  at: '@',
+  question: '?',
+  exclamation: '!',
+  plus: '+',
+  equals: '=',
+  tilde: '~',
+  slash: '/',
+  backslash: '\\',
+  bracket_left: '[',
+  bracket_right: ']',
+  brace_left: '{',
+  brace_right: '}',
+  less_than: '<',
+  greater_than: '>',
+  pi: 'π',
+  mu: 'μ',
+};
+
 const formatShapeName = (value: string) => value.replace(/_/g, ' ');
 
 export const AnimatedTile = memo(function AnimatedTile({ card, disabled, size, onPress }: AnimatedTileProps) {
@@ -63,21 +98,39 @@ export const AnimatedTile = memo(function AnimatedTile({ card, disabled, size, o
         void audioService.playSound('flip_card');
         onPress(card.id);
       }}
-      style={[styles.pressable, { width: size, height: size, minHeight: touchTarget, minWidth: touchTarget }]}
+      style={[styles.pressable, { width: size, height: size }]}
     >
       <Animated.View
         style={[
           styles.tile,
           card.isMatched && styles.matched,
           {
-            transform: [{ perspective: 800 }, { rotateY }],
+            transform: [{ perspective: 800 }, { rotateY }] as any,
           },
         ]}
       >
-        {isRevealed && shapeAsset ? (
-          <Image resizeMode="contain" source={shapeAsset} style={styles.shape} />
+        {isRevealed ? (
+          shapeAsset ? (
+            <Image resizeMode="contain" source={shapeAsset} style={styles.shape} />
+          ) : (
+            <Text
+              adjustsFontSizeToFit
+              numberOfLines={1}
+              style={[styles.textSymbol, { fontSize: Math.max(12, Math.floor(size * 0.45)) }]}
+            >
+              {textSymbolMap[card.value] || card.value}
+            </Text>
+          )
         ) : (
-          <Text adjustsFontSizeToFit numberOfLines={1} style={[styles.face, !isRevealed && styles.hiddenFace]}>
+          <Text
+            adjustsFontSizeToFit
+            numberOfLines={1}
+            style={[
+              styles.face,
+              !isRevealed && styles.hiddenFace,
+              { fontSize: Math.max(12, Math.floor(size * 0.35)) }
+            ]}
+          >
             MF
           </Text>
         )}
@@ -102,7 +155,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: colors.outlineVariant,
     backgroundColor: colors.surfaceLow,
-    padding: spacing.xs,
+    padding: spacing.xxs,
   },
   matched: {
     borderColor: colors.secondary,
@@ -117,5 +170,11 @@ const styles = StyleSheet.create({
   },
   hiddenFace: {
     color: colors.outline,
+  },
+  textSymbol: {
+    color: colors.primary,
+    fontFamily: type.fallback,
+    fontWeight: '700',
+    textAlign: 'center',
   },
 });

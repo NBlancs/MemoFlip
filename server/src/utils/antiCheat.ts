@@ -8,8 +8,9 @@ export interface DifficultyConfig {
 }
 
 const DIFFICULTY_CONFIG: Record<Difficulty, DifficultyConfig> = {
-  EASY: { rows: 4, cols: 4, pairs: 8, minSeconds: 12 },
-  MEDIUM: { rows: 6, cols: 6, pairs: 18, minSeconds: 28 },
+  EASY: { rows: 4, cols: 4, pairs: 8, minSeconds: 10 },
+  NORMAL: { rows: 6, cols: 6, pairs: 18, minSeconds: 20 },
+  HARD: { rows: 8, cols: 8, pairs: 32, minSeconds: 30 },
 };
 
 export const getDifficultyConfig = (difficulty: Difficulty) => DIFFICULTY_CONFIG[difficulty];
